@@ -114,21 +114,28 @@ a:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 3px; }
 .cap {
   position: absolute;
   left: clamp(1.25rem, 5vw, 4.5rem);
-  bottom: clamp(1.5rem, 7vh, 4.5rem);
-  max-width: min(33rem, calc(100% - 2.5rem));
-  padding: clamp(1.3rem, 2.6vw, 2rem) clamp(1.4rem, 2.8vw, 2.2rem);
-  background: var(--glass);
-  backdrop-filter: blur(16px) saturate(1.1);
-  -webkit-backdrop-filter: blur(16px) saturate(1.1);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: 4px;
-  box-shadow: 0 18px 50px rgba(20, 27, 38, 0.10);
+  bottom: clamp(2rem, 9vh, 5.5rem);
+  max-width: min(34rem, calc(100% - 2.5rem));
   opacity: 0;
   transform: translateY(14px);
   will-change: opacity, transform;
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
+  text-shadow: 0 0 2px rgba(244, 247, 250, 0.9), 0 1px 12px rgba(244, 247, 250, 0.8);
+}
+/* borderless fog behind the words — drifts into the snow, no panel edges */
+.cap::before {
+  content: '';
+  position: absolute;
+  inset: -45% -70% -50% -55%;
+  z-index: -1;
+  background: radial-gradient(ellipse at 40% 55%,
+    rgba(244, 247, 250, 0.95),
+    rgba(244, 247, 250, 0.68) 36%,
+    rgba(244, 247, 250, 0.28) 54%,
+    rgba(244, 247, 250, 0) 70%);
+  pointer-events: none;
 }
 .cap h2 {
   margin: 0;
@@ -140,15 +147,11 @@ a:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 3px; }
   text-wrap: balance;
 }
 .cap h2 em { font-style: italic; }
-.cap p { margin: 0.2rem 0 0; color: var(--dim); font-size: 0.99rem; max-width: 44ch; }
+.cap p { margin: 0.2rem 0 0; color: #33404d; font-size: 0.99rem; max-width: 40ch; font-weight: 500; }
 
 /* hero caption (first stage) */
 .cap.heroCap {
-  left: 50%;
   bottom: clamp(2.5rem, 10vh, 6rem);
-  transform: translate(-50%, 14px);
-  text-align: center;
-  align-items: center;
   max-width: min(40rem, calc(100% - 2rem));
 }
 .cap.heroCap h1 {
@@ -171,6 +174,8 @@ a:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 3px; }
   margin-top: 0.7rem;
   padding: 0.55rem 1.25rem;
   border: 1px solid var(--ink);
+  background: rgba(244, 247, 250, 0.5);
+  text-shadow: none;
   border-radius: 999px;
   font-family: var(--mono);
   font-weight: 500;
@@ -244,8 +249,7 @@ footer img { width: 96px; opacity: 0.9; }
   .film { height: auto; }
   .film .viewport { position: relative; height: auto; overflow: visible; }
   .frame { position: relative; height: 88vh; opacity: 1 !important; transform: none !important; }
-  .cap { position: relative; left: 0; bottom: 0; margin: -30vh auto 12vh; opacity: 1 !important; transform: none !important; }
-  .cap.heroCap { transform: none !important; }
+  .cap { position: relative; left: 0; bottom: 0; margin: -26vh 1.5rem 12vh; opacity: 1 !important; transform: none !important; }
   .scrollcue { display: none; }
 }
 
@@ -345,7 +349,7 @@ footer img { width: 96px; opacity: 0.9; }
     var total = rect.height - vh;
     var p = clamp(-rect.top / total, 0, 1);
     var pos = p * N;                       // 0..N
-    var FADE = 0.35;                       // fraction of a stage used for crossfade
+    var FADE = 0.28;                       // fraction of a stage used for crossfade
 
     for (var i = 0; i < N; i++) {
       var d = pos - i;                     // how far past this stage's start
@@ -364,10 +368,7 @@ footer img { width: 96px; opacity: 0.9; }
       else if (s === N - 1) vis = clamp((d2 - 0.15) / 0.22, 0, 1);
       else vis = clamp((d2 - 0.15) / 0.22, 0, 1) - clamp((d2 - 0.78) / 0.2, 0, 1);
       caps[c].style.opacity = vis.toFixed(3);
-      var ty = 14 * (1 - vis);
-      caps[c].style.transform = (caps[c].classList.contains('heroCap')
-        ? 'translate(-50%, ' + ty + 'px)'
-        : 'translateY(' + ty + 'px)');
+      caps[c].style.transform = 'translateY(' + (14 * (1 - vis)) + 'px)';
       caps[c].style.pointerEvents = vis > 0.5 ? 'auto' : 'none';
     }
 
