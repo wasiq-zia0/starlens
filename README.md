@@ -7,8 +7,8 @@ it matters, then show it off.
 
 The page is a scroll-driven journey from orbit down to the Arctic ice:
 
-- **Hero** — a live starfield with an animated satellite-to-ground *laser
-  downlink* (the core idea: satellites send data down as a beam of light).
+- **Hero** — a realistic, observatory-style night scene (canvas): starfield,
+  a satellite glint, and a volumetric *laser downlink* to a ground station.
 - **What is it** — a plain-language explainer with a looping beam diagram.
 - **Radio vs. light** — an animated bandwidth comparison.
 - **How a downlink happens** — the three steps: acquire, lock & downlink, deliver.
@@ -18,10 +18,10 @@ The page is a scroll-driven journey from orbit down to the Arctic ice:
 
 ## Files
 
-- `index.html` — fully self-contained. Fonts (Newsreader / Archivo / IBM Plex
-  Mono), the product renders, and all animation (canvas starfield + inline SVG)
-  are inlined, so there are no external requests. Open it directly in a browser
-  or serve it from any static host (e.g. GitHub Pages).
+- `index.html` — fully self-contained. Fonts (Space Grotesk / Manrope), the
+  product renders, and all animation (canvas + inline SVG) are inlined, so there
+  are no external requests. Open it directly in a browser or serve it from any
+  static host (e.g. GitHub Pages).
 - `CNAME` — custom domain (`starlens.ca`).
 
 Animations respect `prefers-reduced-motion`.
